@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String         @id @default(uuid())
+  email           String         @unique
+  name            String?
+  passwordHash    String
+  role            Role           @default(USER)
+  credits         Int            @default(2)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  resumes         Resume[]
+  interviews      Interview[]
+  transactions    Transaction[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Resume {
+  id              String         @id @default(uuid())
+  userId          String
+  user            User           @relation(fields: [userId], references: [id])
+  s3Url           String
+  parsedData      Json?          // Gemini extracted JSON
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model JobDescription {
+  id              String         @id @default(uuid())
+  title           String
+  company         String?
+  rawText         String
+  parsedData      Json?          // Gemini extracted JSON
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  interviews      Interview[]
+}
+
+model Interview {
+  id               String         @id @default(uuid())
+  userId           String
+  user             User           @relation(fields: [userId], references: [id])
+  jobDescriptionId String
+  jobDescription   JobDescription @relation(fields: [jobDescriptionId], references: [id])
+  
+  status           InterviewStatus @default(PENDING)
+  skillGapAnalysis Json?          // Breakdown of missing skills
+  transcript       Json?          // Array of Q&A messages
+  evaluation       Json?          // Final scoring and feedback
+
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+}
+
+enum InterviewStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+model Transaction {
+  id              String         @id @default(uuid())
+  userId          String
+  user            User           @relation(fields: [userId], references: [id])
+  stripeSessionId String         @unique
+  amount          Float
+  creditsAdded    Int
+  status          TxStatus       @default(PENDING)
+  createdAt       DateTime       @default(now())
+}
+
+enum TxStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
