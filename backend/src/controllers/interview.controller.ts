@@ -40,7 +40,10 @@ export const startInterview = async (req: AuthRequest, res: Response): Promise<v
         });
 
         // 3. Generate Skill Gap Analysis
-        const skillGapAnalysis = await GeminiService.generateSkillGapAnalysis(JSON.stringify(resume.parsedData), jdParsedData);
+        const skillGapAnalysis = await GeminiService.generateSkillGapAnalysis(
+            JSON.stringify(resume.parsedData),
+            JSON.stringify(jdParsedData)
+        );
 
         // 4. Create Interview Record
         const interview = await prisma.interview.create({
@@ -82,9 +85,9 @@ export const startInterview = async (req: AuthRequest, res: Response): Promise<v
             skillGapAnalysis
         });
 
-    } catch (error) {
+    } catch (error: any) {
         console.error('Start interview error:', error);
-        res.status(500).json({ error: 'Failed to initialize interview' });
+        res.status(500).json({ error: error.message || 'Failed to initialize interview' });
     }
 };
 
