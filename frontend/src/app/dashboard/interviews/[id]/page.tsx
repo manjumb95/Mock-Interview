@@ -270,7 +270,7 @@ export default function InterviewRoom() {
                     className="flex items-center gap-2 text-sm text-destructive hover:bg-destructive/10 px-3 py-1.5 rounded-md transition-colors font-medium border border-transparent hover:border-destructive/20"
                 >
                     <StopCircle className="w-4 h-4" />
-                    End Early
+                    End Interview
                 </button>
             </div>
 
@@ -366,6 +366,17 @@ export default function InterviewRoom() {
                             className="p-3 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:hover:bg-primary transition-colors h-14 w-14 flex items-center justify-center shrink-0"
                         >
                             <Send className="w-5 h-5 ml-1" />
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleEndInterview}
+                            disabled={isLoading}
+                            className="p-3 rounded-xl bg-destructive hover:bg-destructive/90 text-white transition-colors h-14 min-w-[56px] flex flex-col items-center justify-center shrink-0 shadow-lg"
+                        >
+                            <StopCircle className="w-5 h-5" />
+                            <span className="text-[10px] uppercase font-bold tracking-widest mt-1">
+                                End
+                            </span>
                         </button>
                     </div>
                 </form>
