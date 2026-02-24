@@ -33,7 +33,7 @@ export class GeminiService {
 
         try {
             const response = await ai.models.generateContent({
-                model: 'gemini-1.5-flash',
+                model: 'gemini-2.5-flash-lite',
                 contents: prompt,
                 config: {
                     responseMimeType: 'application/json',
@@ -104,7 +104,7 @@ export class GeminiService {
 
         try {
             const response = await ai.models.generateContent({
-                model: 'gemini-1.5-flash',
+                model: 'gemini-2.5-flash-lite',
                 contents: prompt,
                 config: {
                     responseMimeType: 'application/json',
@@ -154,7 +154,7 @@ export class GeminiService {
 
         try {
             const response = await ai.models.generateContent({
-                model: 'gemini-1.5-flash',
+                model: 'gemini-2.5-flash-lite',
                 contents: prompt,
                 config: {
                     responseMimeType: 'application/json',
@@ -181,7 +181,7 @@ export class GeminiService {
      */
     static async generateRawText(prompt: string): Promise<string> {
         const response = await ai.models.generateContent({
-            model: 'gemini-1.5-flash', // Uses generic alias to dodge beta strict daily quotas
+            model: 'gemini-2.5-flash-lite', // Uses generic alias to dodge beta strict daily quotas
             contents: prompt,
         });
 
@@ -213,7 +213,7 @@ export class GeminiService {
 
         try {
             const response = await ai.models.generateContent({
-                model: 'gemini-1.5-flash',
+                model: 'gemini-2.5-flash-lite',
                 contents: prompt,
                 config: {
                     responseMimeType: 'application/json',
@@ -263,7 +263,7 @@ export class GeminiService {
 
         try {
             const response = await ai.models.generateContent({
-                model: 'gemini-1.5-flash',
+                model: 'gemini-2.5-flash-lite',
                 contents: prompt,
                 config: {
                     responseMimeType: 'application/json',
